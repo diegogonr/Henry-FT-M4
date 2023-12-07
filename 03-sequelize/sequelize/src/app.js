@@ -10,17 +10,17 @@ server.use(morgan('dev'))                                         //ver los dato
 
 
 
-server.post('/user', async (req, res) => {
+server.post('/user', async (req, res) => {      //async porque se realizará tareas en la db
     try {
         const {name, lastname, fecha, pages} = req.body
 
-        const newUser = await User.create({
+        const newUser = await User.create({         //crear modelos en la db
             name ,
             lastname,
             fecha
         })
 
-        await newUser.addPage(pages)
+        // await newUser.addPage(pages)                //addPage es un metodo apra agregar una pagina
 
         return res.status(200).json(newUser)
 
@@ -35,7 +35,7 @@ server.get('/user', async (req, res)=>{
         const {name} = req.query;
 
         if (!name){
-            const allUsers = await User.findAll({
+            const allUsers = await User.findAll({   //me trae todo de la db
                 attributes: ['name', 'lastname']   //me muestra solo estas props
             } )
             return res.status(200).json(allUsers)
@@ -59,7 +59,7 @@ server.delete ('/user/:id', async(req,res) => {
     try {
         const {id} = req.params
         const userDeleted = await User.findByPk(id);   //busca por la primary key
-        userDeleted.destroy();
+        userDeleted.destroy();                         //elimina el registro de la dbce
         return res.status(200).json(userDeleted)
 
 
@@ -82,6 +82,9 @@ server.get ('/user/:id',async(req,res) => {
     }
 
 })
+
+
+//?CREAR USUARIO SI NO LO ENCUENTRA
 
 server.post('/user/find', async (req, res) => {
     try {

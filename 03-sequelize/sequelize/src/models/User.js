@@ -1,7 +1,7 @@
-const {DataTypes} = require('sequelize')
+const {DataTypes} = require('sequelize')            
 
 
-module.exports = (database) =>{
+module.exports = (database) =>{             //la funcion recibe por parametro a database que es la instancia de la db
     database.define('User', {               //nombre del modelo, atributos del modelo
         id: {
             primaryKey: true,
@@ -18,7 +18,7 @@ module.exports = (database) =>{
             allowNull: false,            //no puede ser nulo
         },  
         fecha:{
-            type:DataTypes.DATEONLY, 
+            type:DataTypes.DATEONLY,    //fecha
             allowNull: false,
         }    
     },
